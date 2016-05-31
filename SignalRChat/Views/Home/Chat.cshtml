@@ -14,10 +14,6 @@
     </p>
     <input type="hidden" id="displayname" />
     <ul id="discussion"></ul>
-    <input type="text" id="message2" />
-    <input type="button" id="sendmessage2" value="Send" />
-    <input type="hidden" id="displayname2" />
-    <ul id="discussion2"></ul>
 </div>
 
 @section scripts {
@@ -41,14 +37,13 @@
                 $("#UserList").html(data);
             });
             // Reference the auto-generated proxy for the hub.
-            var chat = $.connection.chatHub;
-            var chat2 = $.connection.chatHub2;
+            var chat = $.connection.Chat;
             //Joining a Room
             $('#join').click(function () {
                 //Joining the room
                 chat.sever.joinRoom($('#room').val());
             });
-            $('#sendprivate').click(function {
+            $('#sendprivate').click(function() {
                 //Sending a message to just that room
                 chat.server.SendMessageToRoom($('#room').val());
             });
@@ -56,11 +51,6 @@
             chat.client.addNewMessageToPage = function (name, message) {
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
-            };
-            chat2.client.addNewMessageToPage = function (name, message) {
-                // Add the message to the page.
-                $('#discussion2').append('<li><strong>' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</li>');
             };
             // Get the user name and store it to prepend to messages.
@@ -75,16 +65,7 @@
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
-                $('#sendmessage2').click(function () {
-                    // Call the Send method on the hub.
-                    chat2.server.send($('#displayname2').val(), $('#message2').val());
-                    // Clear text box and reset focus for next comment.
-                    $('#message2').val('').focus();
-                });
             });
-            $('#displayname2').val(prompt('Enter your name:', ''));
-            // Set initial focus to message input box.
-            $('#message2').focus();
         });
         // This optional function html-encodes messages for display in the page.
         function htmlEncode(value) {
