@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace SignalRChat
