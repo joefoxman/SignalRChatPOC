@@ -44,19 +44,24 @@
                 $('#discussion').append('<li><strong>' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</li>');
             };
-            chat.client.newMessage = function(name, message) {
+            chat.client.newMessage = function(name, message, roomId) {
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                    + '</strong>: ' + roomId + " " + htmlEncode(message) + '</li>');
             };
 
-            chat.client.isUserInRoom = function (users, roomId) {
+            chat.client.isUserInRoom = function (users, roomId, fromName, message) {
                 var usersSplit = users.split(";");
                 $.each(usersSplit, function (key, value) {
                     // are you in this list for this room?
                     if ($('#displayname').val() === value) {
                         // you are part of this chat room
-                        alert("You are chat room " + roomId + " with other users.");
+                        //Joining the room
+                        // TODO: Open a new browser window
+
+                        chat.server.joinRoom($('#displayname').val(), roomId);
+                        $('#discussion').append('<li><strong>' + htmlEncode(fromName)
+                            + '</strong>: ' + roomId + " " + htmlEncode(message) + '</li>');
                     }
                 });
             };
